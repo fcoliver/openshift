@@ -35,17 +35,26 @@ namespace openshift
 
         public string Dir()
         {
-            IFileProvider provider = new PhysicalFileProvider("\\");
-            IDirectoryContents contents = provider.GetDirectoryContents(""); // the applicationRoot contents
-            StringBuilder ret = new StringBuilder();
-
-          foreach(IFileInfo item in contents)
+            try
             {
+                IFileProvider provider = new PhysicalFileProvider("\\");
+                IDirectoryContents contents = provider.GetDirectoryContents(""); // the applicationRoot contents
+                StringBuilder ret = new StringBuilder();
 
-                ret.AppendLine( item.Name );
-       
+                foreach (IFileInfo item in contents)
+                {
+
+                    ret.AppendLine(item.Name);
+
+                }
+                return ret.ToString();
             }
-            return  ret.ToString() ;
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+       
+           
         }
     }
 }
