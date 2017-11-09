@@ -37,7 +37,7 @@ namespace openshift
         {
             try
             {
-                IFileProvider provider = new PhysicalFileProvider("\\");
+                IFileProvider provider = new PhysicalFileProvider("/");
                 IDirectoryContents contents = provider.GetDirectoryContents(""); // the applicationRoot contents
                 StringBuilder ret = new StringBuilder();
 
