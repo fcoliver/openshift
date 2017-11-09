@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using System.Text;
 
 namespace openshift
 {
@@ -27,8 +29,23 @@ namespace openshift
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync(Dir());
             });
+        }
+
+        public string Dir()
+        {
+            IFileProvider provider = new PhysicalFileProvider("\\");
+            IDirectoryContents contents = provider.GetDirectoryContents(""); // the applicationRoot contents
+            StringBuilder ret = new StringBuilder();
+
+          foreach(IFileInfo item in contents)
+            {
+
+                ret.AppendLine( item.Name );
+       
+            }
+            return  ret.ToString() ;
         }
     }
 }
